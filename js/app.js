@@ -1,22 +1,11 @@
-// Initialize Firebase
-var config = {
-  apiKey: "AIzaSyBF3Q7Sg2rKOCriKyo6kCb20d4a7C0S-_w",
-  authDomain: "ticket-hack.firebaseapp.com",
-  databaseURL: "https://ticket-hack.firebaseio.com",
-  projectId: "ticket-hack",
-  storageBucket: "ticket-hack.appspot.com",
-  messagingSenderId: "642426168856"
-};
-firebase.initializeApp(config);
-
-
-  // función que centraliza al resto de las funciones
+// función que centraliza al resto de las funciones
 function loadPage() {
   loadSplashView();
   loadMainView();
+  $('.login-facebook').click(providerFacebook);
  }
 
-//Función que hace desaparecer mi imagen principal
+//Función que hace desaparecer la imagen principal
 function loadSplashView() {
   setTimeout(function() {
       $("#view-splash").fadeOut(1500);
@@ -30,7 +19,40 @@ function loadMainView() {
     },2000);
 };
 
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyBF3Q7Sg2rKOCriKyo6kCb20d4a7C0S-_w",
+  authDomain: "ticket-hack.firebaseapp.com",
+  databaseURL: "https://ticket-hack.firebaseio.com",
+  projectId: "ticket-hack",
+  storageBucket: "ticket-hack.appspot.com",
+  messagingSenderId: "642426168856"
+};
 
+firebase.initializeApp(config);
 
+//llamar esta función al dar click sobre el botón correspondiente
+function providerFacebook(e){
+  e.preventDefault();
+  var provider = new firebase.auth.FacebookAuthProvider();
+  authenticationWithFacebook(provider);
+}
+
+function authenticationWithFacebook(provider) {
+  firebase.auth().signInWithPopup(provider).then(function(result) {
+  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+  var token = result.credential.accessToken;
+  // The signed-in user info.
+  var user = result.user;
+  console.log(result);
+}).catch(function(error) {
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  var email = error.email;
+  var credential = error.credential;
+});
+// window.location.href = 'views/home.html';
+// console.log('gatos');
+}
 
 $(document).ready(loadPage);
