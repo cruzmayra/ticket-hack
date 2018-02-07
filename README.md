@@ -24,10 +24,12 @@ Crear una app donde los usuarios puedan buscar y vender boletos de conciertos de
 
 ### Cronograma de actividades
 
-![Cronograma](images/Cronograma.jpg)
+![Cronograma](assets/images/Cronograma.jpg)
 
 ### Sketching
 
-![Sketching](images/ticket-hack01.jpg)
-![Sketching](images/ticket-hack-home.jpg)
-![Sketching](images/ticket-hack-perfil.jpg)
+![Sketching](assets/images/ticket-hack01.jpg)
+
+![Sketching](assets/images/ticket-hack-home.jpg)
+
+![Sketching](assets/images/ticket-hack-perfil.jpg)
