@@ -29,7 +29,12 @@ Crear una app donde los usuarios puedan buscar y vender boletos de conciertos de
 ### Sketching
 
 ![Sketching](assets/images/ticket-hack01.jpg)
-
 ![Sketching](assets/images/ticket-hack-home.jpg)
-
 ![Sketching](assets/images/ticket-hack-perfil.jpg)
+
+### Roles
+
+- Mayra Cruz: Investigación, API, Funcionalidad.
+- Gabriela López: Investigación, API, Funcionalidad.
+- Adalid Garcia: Investigación, API, Funcionalidad.
+- Karla Miranda: Investigación, UX, Maquetado.
