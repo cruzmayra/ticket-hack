@@ -3,6 +3,8 @@ function loadPage() {
   loadSplashView();
   loadMainView();
   $('.login-facebook').click(providerFacebook);
+  $('.login-google').click(loginGoogle);
+  
  }
 
 //Función que hace desaparecer la imagen principal
@@ -56,3 +58,35 @@ function authenticationWithFacebook(provider) {
 }
 
 $(document).ready(loadPage);
+
+//autenticacion con Google
+function loginGoogle(){
+
+  function newLoginHappened(user){
+    if(user){
+      //User is signed in
+      app(user);
+    } else {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithRedirect(provider);
+    }
+  }
+    firebase.auth().onAuthStateChanged(newLoginHappened);
+}
+
+function app(user){
+  //user.displayName;
+  //user.email;
+  //user.photoURL;
+  //user.uid is unique
+
+  document.getElementById("clientName").innerHTML = user.displayName;
+}
+
+
+
+
+
+
+
+
