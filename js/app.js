@@ -4,6 +4,7 @@ function loadPage() {
   loadMainView();
   $('.login-facebook').click(providerFacebook);
   $('.login-google').click(loginGoogle);
+  $('.vendes').click(savePost);
 
  }
 
@@ -11,14 +12,14 @@ function loadPage() {
 function loadSplashView() {
   setTimeout(function() {
       $("#view-splash").fadeOut(1500);
-    },2000);
+    },3000);
 };
 
 //Función que hace aparecer la siguiente pantalla
 function loadMainView() {
     setTimeout(function() {
       $("#second-section").fadeIn(1500);
-    },2000);
+    },3000);
 };
 
 // Initialize Firebase
@@ -43,11 +44,9 @@ function providerFacebook(e){
 //función que autentifica el acceso del usuario utilizando su cuenta de FB
 function authenticationWithFacebook(provider) {
   firebase.auth().signInWithPopup(provider).then(function(result) {
-  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
   var token = result.credential.accessToken;
-  // The signed-in user info.
   var user = result.user;
-  console.log(result);
+  console.log(user);
   window.location.href = 'views/home.html';
   saveDataUser(user);
 }).catch(function(error) {
@@ -66,16 +65,17 @@ function saveDataUser(user) {
     uid: user.uid,
     name : user.displayName,
     email : user.email,
-    photo: user.photoURL
+    photo: user.photoURL,
+    post: ['go']
   }
   firebase.database().ref('ticket-hack-user/' + user.uid)
   .set(ticketHackUser);
+  newpost(user.uid);
 }
 
-$(document).ready(loadPage);
-
 //autenticacion con Google
-function loginGoogle(){
+function loginGoogle(e){
+  e.preventDefault();
   var provider = new firebase.auth.GoogleAuthProvider();
   authentication(provider);
 }
@@ -87,7 +87,7 @@ function authentication(provider){
     console.log(user);
     window.location.href = 'views/home.html';
     saveDataUser(user);
-    app(user);
+    //app(user);
   }).catch(function(error) {
     var errorCode = error.code;
     var errorMessage = error.message;
@@ -104,3 +104,14 @@ function app(user){
 
   document.getElementById("clientName").innerHTML = user.displayName;
 }
+
+function savePost(user){
+  // e.preventDefault();
+  // console.log(localStorage.getItem('dataUser'));
+  var newpost = {
+    post: 'vendo boleto para el corona'
+  }
+firebase.database().ref('ticket-hack-user/'+ user.uid + '/post/').push(newpost)
+}
+
+$(document).ready(loadPage);
