@@ -73,10 +73,11 @@ a:hover{
 }
 
 .profile-1 {
-  width: 100%;
+  width: 75%;
   border-radius: 50%;
   display: inline-block;
-  margin: .5em 0 .5em 0;
+  margin: .8em 0 .8em -1em;
+  padding: 0;
 }
 
 #search {
@@ -98,7 +99,13 @@ a:hover{
 }
 
 .update {
-  border: 1px solid #213323;
+  border: 1px solid #FFF;
+  background-color: #c0c4c7;
+}
+
+.update-2 {
+  text-align: justify;
+  margin-top: 1em
 }
 
 .sale {
@@ -115,4 +122,8 @@ a:hover{
 
 .band {
   width: 80%;
+}
+
+.up {
+  padding: 0;
 }
