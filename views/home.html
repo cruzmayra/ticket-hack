@@ -25,8 +25,44 @@
               <li><a href="../index.html">Cerrar sesión</a></li>
             </ul>
           </div>
-          <a class="buscas" href="#">Buscas boleto</a>
-          <a class="vendes" href="#">Vendes boleto</a>
+          <a class="buscas" data-toggle="modal" data-target="#myModal" href="#">Buscas boleto</a>
+          <a class="vendes" data-toggle="modal" data-target="#myModal-2" href="#">Vendes boleto</a>
+          <!--Primer Modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Buscas boleto</h4>
+                </div>
+                <div class="modal-body">
+                  <textarea placeholder="Publica lo que buscas aqui" rows="8" cols="50"></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-m " data-dismiss="modal">Publicar</button>
+                </div>
+              </div>
+            </div>
+          </div><!--Termina Primer Modal -->
+          <!--Segundo Modal -->
+          <div class="modal fade" id="myModal-2" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Vendes boleto</h4>
+                </div>
+                <div class="modal-body">
+                  <textarea placeholder="Publica lo que vendes aqui" rows="8" cols="50"></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-m " data-dismiss="modal">Publicar</button>
+                </div>
+              </div>
+            </div>
+          </div><!--Termina Segundo Modal -->
         </div>
       </div>
     </nav>
