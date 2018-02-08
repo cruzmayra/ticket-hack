@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ticket-Hack Home</title>
+    <title>Perfil del usuario Ticket-Hack</title>
     <link rel="shortcut icon" type="image/x-icon" href="assets/icon/favicon.ico">
 <!-- Bootstrap -->
     <link href="../css/vendors/bootstrap.min.css" rel="stylesheet">
@@ -16,7 +16,16 @@
     <nav class="n-btn">
       <div class="container-fluid">
         <div>
-          <a href="#"><img src="../assets/images/menu.png" alt="lines"></a>
+          <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <a href="#"><img src="../assets/images/menu.png" alt="lines"></a>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a href="home.html">Home</a></li>
+              <li><a href="user.html">Mi perfil</a></li>
+              <li><a href="../index.html">Cerrar sesión</a></li>
+            </ul>
+          </div>
           <a class="buscas" href="#">Buscas boleto</a>
           <a class="buscas" href="#">Vendes boleto</a>
         </div>

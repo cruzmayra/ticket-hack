@@ -50,7 +50,6 @@ a:hover{
   margin-bottom: -4em;
 }
 
-
 /*Estilos vista ticket-hack home*/
 .vista-2 {
   background: #FFF;
@@ -156,4 +155,28 @@ h3 {
 
 .bttm {
   margin-bottom: 1em;
+}
+
+.dropdown{
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background-color: #000;
+  padding: 0;
+}
+
+.titulo {
+  margin: 0;
+  margin-bottom: .5em;
+}
+
+.user-2{
+  text-decoration: none;
+  color: #000;
+}
+
+.user-2:hover{
+  text-decoration: none;
+  color: #000;
 }
