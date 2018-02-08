@@ -40,6 +40,7 @@ function providerFacebook(e){
   authenticationWithFacebook(provider);
 }
 
+//función que autentifica el acceso del usuario utilizando su cuenta de FB
 function authenticationWithFacebook(provider) {
   firebase.auth().signInWithPopup(provider).then(function(result) {
   // This gives you a Facebook Access Token. You can use it to access the Facebook API.
@@ -47,14 +48,28 @@ function authenticationWithFacebook(provider) {
   // The signed-in user info.
   var user = result.user;
   console.log(result);
+  window.location.href = 'views/home.html';
+  saveDataUser(user);
 }).catch(function(error) {
   var errorCode = error.code;
   var errorMessage = error.message;
   var email = error.email;
   var credential = error.credential;
 });
-// window.location.href = 'views/home.html';
-// console.log('gatos');
+}
+
+var database = firebase.database();
+
+// función para almacenar al usuario en la base de datos
+function saveDataUser(user) {
+  var ticketHackUser = {
+    uid: user.uid,
+    name : user.displayName,
+    email : user.email,
+    photo: user.photoURL
+  }
+  firebase.database().ref('ticket-hack-user/' + user.uid)
+  .set(ticketHackUser);
 }
 
 $(document).ready(loadPage);
