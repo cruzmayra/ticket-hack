@@ -5,7 +5,7 @@ function loadPage() {
   $('.login-facebook').click(providerFacebook);
   $('.login-google').click(loginGoogle);
   $('.vendes').click(savePost);
-  // createViewHome();
+  paintUserPost();
  }
 
 /*---------- Función que hace desaparecer la imagen principal ----------*/
@@ -48,8 +48,7 @@ function authenticationWithFacebook(provider) {
   firebase.auth().signInWithPopup(provider).then(function(result) {
   var token = result.credential.accessToken;
   var user = result.user;
-  console.log(user);
-
+  // console.log(user);
   window.location.href = 'views/home.html';
   saveDataUser(user);
 }).catch(function(error) {
@@ -100,13 +99,17 @@ function saveDataUser(user) {
 }
 
 
-// function createViewHome() {
-//   var postRef = firebase.database().ref('ticket-hack-user/' + logedUser + '/post/');
-//   postRef.on('value', function(snapshot) {
-//   updateStarCount(postElement, snapshot.val());
-// });
-// console.log(postRef);
-// }
+function paintUserPost() {
+  firebase.database().ref('ticket-hack-user/' + logedUser + '/post')
+  .on('value', function(snap){
+    var allPost = "";
+    datos = snap.val();
+    for(var key in datos){
+      allPost += datos[key].userPost;
+    }
+    console.log(allPost);
+  })
+}
 
 /*---------- función para almacenar el nuevo post del usuario logeado ----------*/
 function savePost() {
