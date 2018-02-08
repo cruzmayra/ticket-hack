@@ -4,7 +4,7 @@ function loadPage() {
   loadMainView();
   $('.login-facebook').click(providerFacebook);
   $('.login-google').click(loginGoogle);
-  
+  $('.exit').click(logOutGoogle);
  }
 
 //Función que hace desaparecer la imagen principal
@@ -72,6 +72,8 @@ function loginGoogle(){
     }
   }
     firebase.auth().onAuthStateChanged(newLoginHappened);
+    window.location.assign("../views/home.html");
+    
 }
 
 function app(user){
@@ -79,10 +81,19 @@ function app(user){
   //user.email;
   //user.photoURL;
   //user.uid is unique
-
   document.getElementById("clientName").innerHTML = user.displayName;
+  
 }
 
+//funcion para cerrar sesion
+function logOutGoogle(){
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+  }).catch(function(error) {
+    // An error happened.
+  });
+  window.location.assign("../index.html");
+}
 
 
 
