@@ -4,7 +4,7 @@ function loadPage() {
   loadMainView();
   $('.login-facebook').click(providerFacebook);
   $('.login-google').click(loginGoogle);
-  
+
  }
 
 //Función que hace desaparecer la imagen principal
@@ -76,17 +76,24 @@ $(document).ready(loadPage);
 
 //autenticacion con Google
 function loginGoogle(){
+  var provider = new firebase.auth.GoogleAuthProvider();
+  authentication(provider);
+}
 
-  function newLoginHappened(user){
-    if(user){
-      //User is signed in
-      app(user);
-    } else {
-      var provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithRedirect(provider);
-    }
-  }
-    firebase.auth().onAuthStateChanged(newLoginHappened);
+function authentication(provider){
+  firebase.auth().signInWithPopup(provider).then(function(result) {
+    var token = result.credential.accessToken;
+    var user = result.user;
+    console.log(user);
+    window.location.href = 'views/home.html';
+    saveDataUser(user);
+    app(user);
+  }).catch(function(error) {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    var email = error.email;
+    var credential = error.credential;
+  });
 }
 
 function app(user){
@@ -97,11 +104,3 @@ function app(user){
 
   document.getElementById("clientName").innerHTML = user.displayName;
 }
-
-
-
-
-
-
-
-
