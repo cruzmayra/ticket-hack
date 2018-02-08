@@ -4,21 +4,21 @@ function loadPage() {
   loadMainView();
   $('.login-facebook').click(providerFacebook);
   $('.login-google').click(loginGoogle);
-
+  $('.vendes').click(savePost);
  }
 
 //Función que hace desaparecer la imagen principal
 function loadSplashView() {
   setTimeout(function() {
       $("#view-splash").fadeOut(1500);
-    },2000);
+    },3000);
 };
 
 //Función que hace aparecer la siguiente pantalla
 function loadMainView() {
     setTimeout(function() {
       $("#second-section").fadeIn(1500);
-    },2000);
+    },3000);
 };
 
 // Initialize Firebase
@@ -40,14 +40,15 @@ function providerFacebook(e){
   authenticationWithFacebook(provider);
 }
 
+var logedUser = localStorage.getItem('datos');
+
 //función que autentifica el acceso del usuario utilizando su cuenta de FB
 function authenticationWithFacebook(provider) {
   firebase.auth().signInWithPopup(provider).then(function(result) {
-  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
   var token = result.credential.accessToken;
-  // The signed-in user info.
   var user = result.user;
-  console.log(result);
+  console.log(user);
+
   window.location.href = 'views/home.html';
   saveDataUser(user);
 }).catch(function(error) {
@@ -58,24 +59,9 @@ function authenticationWithFacebook(provider) {
 });
 }
 
-var database = firebase.database();
-
-// función para almacenar al usuario en la base de datos
-function saveDataUser(user) {
-  var ticketHackUser = {
-    uid: user.uid,
-    name : user.displayName,
-    email : user.email,
-    photo: user.photoURL
-  }
-  firebase.database().ref('ticket-hack-user/' + user.uid)
-  .set(ticketHackUser);
-}
-
-$(document).ready(loadPage);
-
 //autenticacion con Google
-function loginGoogle(){
+function loginGoogle(e){
+  e.preventDefault();
   var provider = new firebase.auth.GoogleAuthProvider();
   authentication(provider);
 }
@@ -87,7 +73,7 @@ function authentication(provider){
     console.log(user);
     window.location.href = 'views/home.html';
     saveDataUser(user);
-    app(user);
+    //app(user);
   }).catch(function(error) {
     var errorCode = error.code;
     var errorMessage = error.message;
@@ -95,6 +81,33 @@ function authentication(provider){
     var credential = error.credential;
   });
 }
+
+var database = firebase.database();
+
+// función para almacenar al usuario en la base de datos
+function saveDataUser(user) {
+  var ticketHackUser = {
+    uid: user.uid,
+    name : user.displayName,
+    email : user.email,
+    photo: user.photoURL,
+    post: ['go']
+  }
+  firebase.database().ref('ticket-hack-user/' + user.uid)
+  .set(ticketHackUser)
+  localStorage.setItem('datos', ticketHackUser.uid);
+}
+
+function savePost(){
+  // console.log(logedUser);
+  var newpost = {
+    userPost: 'vendo boleto para el corona'
+  }
+firebase.database().ref('ticket-hack-user/' + logedUser + '/post/').push(newpost)
+}
+
+$(document).ready(loadPage);
+
 
 function app(user){
   //user.displayName;
