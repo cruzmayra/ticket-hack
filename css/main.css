@@ -180,3 +180,23 @@ h3 {
   text-decoration: none;
   color: #000;
 }
+
+/*Estilos modales */
+.modal-title {
+  color: #000;
+}
+
+.btn-m {
+  background-color: #0D192A;
+  color: #FFF;
+}
+
+textarea {
+  border: 2px solid #0D192A;
+  border-radius: .5em;
+  color: #000;
+}
+
+.modal-content {
+  margin-top: 15em;
+}
