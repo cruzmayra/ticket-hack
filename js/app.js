@@ -3,7 +3,8 @@ function loadPage() {
   loadSplashView();
   loadMainView();
   $('.login-facebook').click(providerFacebook);
-  loginGoogle();
+  $('.login-google').click(loginGoogle);
+  
  }
 
 //Función que hace desaparecer la imagen principal
