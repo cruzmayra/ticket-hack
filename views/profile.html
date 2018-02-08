@@ -3,72 +3,73 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sykkel Perfil</title>
+    <title>Ticket-Hack Home</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/icon/favicon.ico">
 <!-- Bootstrap -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/vendors/bootstrap.min.css" rel="stylesheet">
 <!-- Fuentes google -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,400,500,700" rel="stylesheet">
 <!-- Enlaza CSS -->
     <link rel="stylesheet" href="../css/main.css">
   </head>
   <body>
-    <section class="vista-2">
+    <nav class="n-btn">
       <div class="container-fluid">
-        <div class="row">
-          <div class="col-xs-2">
-            <a href="menu.html"><i class="fa fa-angle-left fa-3x fa-1" aria-hidden="true"></i></a>
-          </div>
-          <div class="col-xs-2 col-xs-push-7">
-            <img class="logo-verde" src="../assets/icon/logo-verde.png" alt="logo">
-          </div>
+        <div>
+          <a href="#"><img src="../assets/images/menu.png" alt="lines"></a>
+          <a class="buscas" href="#">Buscas boleto</a>
+          <a class="buscas" href="#">Vendes boleto</a>
+        </div>
+      </div>
+    </nav>
+    <section class="vista-2">
+      <div class="container-fluid ">
         <div class="row">
           <div class="col-xs-10 col-xs-push-1">
             <div class="row">
               <div class="col-xs-12">
-                <img  class="profile user-photo" src="" alt="perfil">
-                <div class="">
-                  <p class="name user-name"></p><br>
-                  <p class="nivel">Nivel: Intermedio</p>
-                </div>
-                <a class="profile-info" href="#">Información</a>
-                <a class="profile-info" href="#">Fotos</a>
-                <a class="profile-info" href="#">Amigos</a>
-                <a class="profile-info"href="#">Más</a>
-                <textarea id="update" type="text" placeholder="Comparte tu historia"></textarea>
-                <div class="upload1">
-                  <button class="btn-up" type="button" name="button"><i class="fa fa-picture-o" aria-hidden="true"></i></button>
-                  <button class="btn-up" type="button" name="button"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
-                  <button class="btn-up" type="button" name="button">Publicar</button>
-                </div>
+                <img class="logo-1" src="../assets/images/ticket-hack-logo.png" alt="logo">
                 <div class="container ">
+                  <h3>Perfil del usuario</h3>
+                </div>
+                <div class="container update col-xs-12">
                   <div class="col-xs-3 up">
-                    <img  class="profile-1" src="../assets/images/pic-profile.jpg" alt="perfil">
+                    <img  class="profile-1" src="../assets/images/perfil-1.jpg" alt="perfil">
                   </div>
                   <div class="col-xs-9 up">
-                    <p class="update-2"><strong>Amanda Tapia</strong> <br> Me encanta rodar y conocer nuevos lugares! </p>
+                    <h4 class="update-2"><strong>Stephanie Cervantes</strong> <br> CdMx</h4>
                   </div>
                 </div>
-                <a href="../index.html"><button class="log-out"type="button" name="button"><i class="fa fa-power-off" aria-hidden="true"></i></button></a>
+                <div class="container update col-xs-12">
+                  <div class="col-xs-12 up ">
+                    <h4>Puntuación del usuario</h4>
+                    <img class="rating" src="../assets/images/rating.jpg" alt="rating">
+                  </div>
+                </div>
+                <div class="container update col-xs-12 bttm">
+                  <div class="col-xs-12 up ">
+                    <h4>Comentarios</h4>
+                    <h5 class="just"><strong>Todo perfecto!</strong></h5>
+                    <p class="just">La comunicación fue buena y el trato se hizo sin ningún problema.</p>
+                    <h5 class="just"><strong>Buen trato</strong></h5>
+                    <p class="just">Todo estuvo bien solo que llego un poco tarde a la entrega.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-
-<!-- SCRIPTS FIREBASE -->
+<!-- SCRIPT FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"></script>
-
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="../js/jquery-3.3.1.min.js" charset="utf-8"></script>
+    <script src="../js/vendors/jquery-3.3.1.min.js" charset="utf-8"></script>
 <!--Js -->
     <script type="text/javascript" src="../js/app.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../js/bootstrap.min.js"></script>
-<!-- Iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+    <script src="../js/vendors/bootstrap.min.js"></script>
+
 
   </body>
 </html>

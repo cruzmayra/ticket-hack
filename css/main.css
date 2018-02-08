@@ -70,6 +70,7 @@ a:hover{
 .logo-1 {
   width: 50%;
   text-align: center;
+  margin-top: .2em;
 }
 
 .profile-1 {
@@ -101,6 +102,7 @@ a:hover{
 .update {
   border: 1px solid #FFF;
   background-color: #c0c4c7;
+  height: auto;
 }
 
 .update-2 {
@@ -131,5 +133,27 @@ a:hover{
 
 .coment {
   margin-left: 12em;
+  margin-bottom: 1em;
+}
+
+.blue {
+  background-color: #abced3;
+}
+/* Estilos vista Perfil Usuario */
+.rating {
+  margin-bottom: 1em;
+}
+
+.just {
+  margin-top: .5em;
+  text-align: justify;
+}
+
+h3 {
+  margin-top: .4em;
+  margin-bottom: 1em;
+}
+
+.bttm {
   margin-bottom: 1em;
 }
