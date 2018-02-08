@@ -5,7 +5,6 @@ function loadPage() {
   $('.login-facebook').click(providerFacebook);
   $('.login-google').click(loginGoogle);
   $('.vendes').click(savePost);
-
  }
 
 //Función que hace desaparecer la imagen principal
@@ -41,12 +40,15 @@ function providerFacebook(e){
   authenticationWithFacebook(provider);
 }
 
+var logedUser = localStorage.getItem('datos');
+
 //función que autentifica el acceso del usuario utilizando su cuenta de FB
 function authenticationWithFacebook(provider) {
   firebase.auth().signInWithPopup(provider).then(function(result) {
   var token = result.credential.accessToken;
   var user = result.user;
   console.log(user);
+
   window.location.href = 'views/home.html';
   saveDataUser(user);
 }).catch(function(error) {
@@ -55,22 +57,6 @@ function authenticationWithFacebook(provider) {
   var email = error.email;
   var credential = error.credential;
 });
-}
-
-var database = firebase.database();
-
-// función para almacenar al usuario en la base de datos
-function saveDataUser(user) {
-  var ticketHackUser = {
-    uid: user.uid,
-    name : user.displayName,
-    email : user.email,
-    photo: user.photoURL,
-    post: ['go']
-  }
-  firebase.database().ref('ticket-hack-user/' + user.uid)
-  .set(ticketHackUser);
-  newpost(user.uid);
 }
 
 //autenticacion con Google
@@ -96,6 +82,33 @@ function authentication(provider){
   });
 }
 
+var database = firebase.database();
+
+// función para almacenar al usuario en la base de datos
+function saveDataUser(user) {
+  var ticketHackUser = {
+    uid: user.uid,
+    name : user.displayName,
+    email : user.email,
+    photo: user.photoURL,
+    post: ['go']
+  }
+  firebase.database().ref('ticket-hack-user/' + user.uid)
+  .set(ticketHackUser)
+  localStorage.setItem('datos', ticketHackUser.uid);
+}
+
+function savePost(){
+  // console.log(logedUser);
+  var newpost = {
+    userPost: 'vendo boleto para el corona'
+  }
+firebase.database().ref('ticket-hack-user/' + logedUser + '/post/').push(newpost)
+}
+
+$(document).ready(loadPage);
+
+
 function app(user){
   //user.displayName;
   //user.email;
@@ -104,14 +117,3 @@ function app(user){
 
   document.getElementById("clientName").innerHTML = user.displayName;
 }
-
-function savePost(user){
-  // e.preventDefault();
-  // console.log(localStorage.getItem('dataUser'));
-  var newpost = {
-    post: 'vendo boleto para el corona'
-  }
-firebase.database().ref('ticket-hack-user/'+ user.uid + '/post/').push(newpost)
-}
-
-$(document).ready(loadPage);
