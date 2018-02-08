@@ -105,7 +105,8 @@ a:hover{
 
 .update-2 {
   text-align: justify;
-  margin-top: 1em
+  margin-top: 1em;
+  margin-bottom: 0;
 }
 
 .sale {
@@ -126,4 +127,9 @@ a:hover{
 
 .up {
   padding: 0;
+}
+
+.coment {
+  margin-left: 12em;
+  margin-bottom: 1em;
 }
