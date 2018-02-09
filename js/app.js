@@ -113,7 +113,7 @@ function dataApi() {
         async:true,
         dataType: "json",
         success: function(json) {
-                    console.log(json);
+                    //console.log(json);
                    var event = json._embedded.events
                 console.log(event);
                  
@@ -121,10 +121,12 @@ function dataApi() {
                     var nameEvent= event[i].name; //nombre del evento
                     var infoEvent = event[i].info; //descripcion del evento 
                     var datesObject= event[i].dates;
+                    var urlEvent = event[i].url; //sitio Web 
+                    var adressEvent = event[i]._embedded.venues[0].name;//lugar del evento
                     var dateEvent = datesObject.start.localDate; //fecha del evento
                     var timeEvent = datesObject.start.localTime; //hora del evento
                     
-                    printEvents(nameEvent, infoEvent, dateEvent, timeEvent);
+                    printEvents(nameEvent, infoEvent, dateEvent, timeEvent, adressEvent,urlEvent);
                     
                     
                    }
@@ -140,7 +142,7 @@ function dataApi() {
     
 }
 
-function printEvents(nameEvent,infoEvent,dateEvent,timeEvent){
+function printEvents(nameEvent,infoEvent,dateEvent,timeEvent,adressEvent,urlEvent){
   //creando elementos dimamicamnte//
   var $eventBox = $('<div/>').addClass('event col-xs-12 card');
   var $nameEventBox = $('<h4/>').addClass('name-event');
@@ -150,27 +152,30 @@ function printEvents(nameEvent,infoEvent,dateEvent,timeEvent){
      });
      
 
-  var $infoEventBox = $('<p/>').addClass('info-event');
+  var $adressEventBox = $('<p/>').addClass('adress-event');
   var $dateEventBox = $('<span/>').addClass('date-event');
   var $space = $('<br/>')
   var $timeEventBox = $('<span/>').addClass('time-event');
+  var $urlEventBox = $('<div/>').addClass('url-event');
 
   // Agregando texto dinamicamente 
 
   $nameEventBox.text(nameEvent);
  
-  $infoEventBox.text(infoEvent);
+  $adressEventBox.text("Lugar:" + " " +adressEvent);
   $dateEventBox.text("Fecha:" + " " + dateEvent);
   $timeEventBox.text("Hora:" + " " + timeEvent);
+  $urlEventBox.text("Mas Info:" + " " + urlEvent);
 
    // Agregando a contenedor
 
    $eventBox.append($nameEventBox);
    $eventBox.append($imgEventBox);
-   $eventBox.append($infoEventBox);
+   $eventBox.append($adressEventBox);
    $eventBox.append($dateEventBox);
    $eventBox.append($space);
    $eventBox.append($timeEventBox);
+   $eventBox.append($urlEventBox);
    $('.events-container').append($eventBox);
 
 

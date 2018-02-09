@@ -114,16 +114,27 @@ a:hover{
 }
 
 .card {
-  background-color: #FFF;
-  border: 1px solid #213323;
+  /* background-image: linear-gradient(to top, #a589a5, #dab7df);
+  background-blend-mode: hard-light; */
+  /* border: 1px solid #8c918e; */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin-top: 1em;
   height: auto;
 }
 
 .band {
-  width: 35%;
+  width: 100%;
 }
 
 .up {
   padding: 0;
+}
+
+.url-event {
+  font-size: 65%;
+  padding-bottom: 5%;
+}
+.name-event {
+  color: #432843;
+  font-weight: bold;
 }
