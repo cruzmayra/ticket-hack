@@ -4,7 +4,7 @@ function loadPage() {
   loadMainView();
   $('.login-facebook').click(providerFacebook);
   $('.login-google').click(loginGoogle);
-  $('.vendes').click(savePost);
+  $('.publicar-busqueda').click(saveSearchingPost);
   paintUserPost();
  }
 
@@ -91,7 +91,7 @@ function saveDataUser(user) {
     name : user.displayName,
     email : user.email,
     photo: user.photoURL,
-    post: ['go']
+    post: []
   }
   firebase.database().ref('ticket-hack-user/' + user.uid)
   .set(ticketHackUser)
@@ -112,10 +112,10 @@ function paintUserPost() {
 }
 
 /*---------- función para almacenar el nuevo post del usuario logeado ----------*/
-function savePost() {
+function saveSearchingPost() {
   // console.log(logedUser);
   var newpost = {
-    userPost: 'vendo boleto para el corona'
+    userPost: $('.searching-textarea').val()
   }
 firebase.database().ref('ticket-hack-user/' + logedUser + '/post/').push(newpost)
 }
