@@ -6,8 +6,8 @@ function loadPage() {
   $('.login-google').click(loginGoogle);
   dataApi();
   $('.publicar-busqueda').click(saveSearchingPost);
-  readUserPostSaved();
   readPostSaved();
+  readUserPostSaved();
  }
 
 /*---------- Función que hace desaparecer la imagen principal ----------*/
