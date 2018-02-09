@@ -48,6 +48,11 @@ a:hover{
   margin-top: 6em;
   margin-right: .1em;
   margin-bottom: -4em;
+  font-size: 1.2em;
+}
+
+.topb {
+  margin-top: 11em;
 }
 
 /*Estilos vista ticket-hack home*/
@@ -131,7 +136,7 @@ a:hover{
 }
 
 .coment {
-  margin-left: 12em;
+  margin-left: 10em;
   margin-bottom: 1em;
 }
 
@@ -205,6 +210,7 @@ textarea {
   border: 2px solid #0D192A;
   border-radius: .5em;
   color: #000;
+  overflow-y: scroll;
 }
 
 .modal-content {
