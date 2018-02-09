@@ -41,7 +41,7 @@ function providerFacebook(e){
   authenticationWithFacebook(provider);
 }
 
-var logedUser = localStorage.getItem('datos');
+var loggedUser = localStorage.getItem('userId');
 
 /*---------- función que autentifica el acceso del usuario utilizando su cuenta de FB ----------*/
 function authenticationWithFacebook(provider) {
@@ -73,7 +73,6 @@ function authentication(provider){
     console.log(user);
     window.location.href = 'views/home.html';
     saveDataUser(user);
-    //app(user);
   }).catch(function(error) {
     var errorCode = error.code;
     var errorMessage = error.message;
@@ -86,39 +85,51 @@ var database = firebase.database();
 
 /*---------- función para almacenar al usuario en la base de datos ----------*/
 function saveDataUser(user) {
-  var ticketHackUser = {
-    uid: user.uid,
-    name : user.displayName,
-    email : user.email,
-    photo: user.photoURL,
-    post: []
-  }
   firebase.database().ref('ticket-hack-user/' + user.uid)
-  .set(ticketHackUser)
-  localStorage.setItem('datos', ticketHackUser.uid);
+  .once('value').then(function(snapshot){
+   var userData = snapshot.val();
+   var updatedUserData = {};
+     updatedUserData.uid = userData && userData.uid || user.uid;
+     updatedUserData.name = userData && userData.name || user.displayName;
+     updatedUserData.email = userData && userData.email || user.email;
+     updatedUserData.photo = userData && userData.photo || user.photoURL;
+     updatedUserData.posts = userData && userData.posts || []
+   firebase.database().ref('ticket-hack-user/' + user.uid)
+   .set(updatedUserData)
+   localStorage.setItem('userId', user.uid);
+   console.log(localStorage.getItem('userId'));
+  })
+
 }
 
 /*---------- función para leer los post guardados del usuario loggeado ----------*/
 function paintUserPost() {
-  firebase.database().ref('ticket-hack-user/' + logedUser + '/post')
-  .on('value', function(snap){
-    var allPost = "";
-    datos = snap.val();
-    for(var key in datos){
-      allPost += datos[key].userPost;
-    }
-    // console.log(allPost);
+  var loggedUser = localStorage.getItem('userId');
+  console.log(loggedUser);
+  var postsRef = firebase.database().ref('ticket-hack-user/' + loggedUser + '/posts');
+  postsRef.on('value', function(snapshot){
+
+    var userPosts = snapshot.val();
   })
 }
 
 /*---------- función para almacenar el nuevo post del usuario logeado ----------*/
 function saveSearchingPost() {
-  // console.log(logedUser);
+  var loggedUser = localStorage.getItem('userId');
   var newpost = {
-    userPost: $('.searching-textarea').val()
+    text: $('.searching-textarea').val(),
+    timestamp: Date.now(),
+    type: 'searching',
+    userId: loggedUser
   }
-firebase.database().ref('ticket-hack-user/' + logedUser + '/post/').push(newpost)
-paintSearchingPost(newpost);
+
+  var newPostKey = firebase.database().ref('ticket-hack-user/' + loggedUser + '/posts/').push().key;
+
+  var updates = {};
+  updates['ticket-hack-user/' + loggedUser + '/posts/' + newPostKey] = newpost;
+  updates['ticket-hack-posts/' + newPostKey] = newpost;
+
+  return firebase.database().ref().update(updates);
 }
 
 /*---------- función para pintar en el html los post de busqueda ----------*/
@@ -127,13 +138,3 @@ function paintSearchingPost(newpost){
 }
 
 $(document).ready(loadPage);
-
-
-// function app(user){
-//   //user.displayName;
-//   //user.email;
-//   //user.photoURL;
-//   //user.uid is unique
-//
-//   document.getElementById("clientName").innerHTML = user.displayName;
-// }
