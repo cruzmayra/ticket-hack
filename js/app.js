@@ -4,6 +4,7 @@ function loadPage() {
   loadMainView();
   $('.login-facebook').click(providerFacebook);
   $('.login-google').click(loginGoogle);
+  dataApi();
   $('.publicar-busqueda').click(saveSearchingPost);
   paintUserPost();
  }
@@ -110,7 +111,7 @@ function paintUserPost() {
     // console.log(allPost);
   })
 }
-
+  
 /*---------- función para almacenar el nuevo post del usuario logeado ----------*/
 function saveSearchingPost() {
   // console.log(logedUser);
@@ -126,9 +127,62 @@ function paintSearchingPost(newpost){
   console.log(newpost.userPost);
 }
 
+function dataApi() {
+    $.ajax({
+        type:"GET",
+        url:"https://app.ticketmaster.com/discovery/v2/events.json?countryCode=MX&apikey=PjwwXnpkUrZt7R0wCNGZli5VGDAsZmSJ" ,
+        async:true,
+        dataType: "json",
+        success: function(json) {
+                    console.log(json);
+                   var event = json._embedded.events
+                console.log(event);
+                 
+                   for(var i=0; i < event.length; i++ ){
+                    var nameEvent= event[i].name; //nombre del evento
+                    var infoEvent = event[i].info; //descripcion del evento 
+                    var datesObject= event[i].dates;
+                    var dateEvent = datesObject.start.localDate; //fecha del evento
+                    var timeEvent = datesObject.start.localTime; //hora del evento
+                    
+                    printEvents(nameEvent, infoEvent, dateEvent, timeEvent);
+                   }                
+                 },
+        error: function(xhr, status, err) {
+                    // This time, we do not end up here!
+                 }
+      });
+}
+
+function printEvents(nameEvent,infoEvent,dateEvent,timeEvent){
+  //creando elementos dimamicamnte//
+  var $eventBox = $('<div/>').addClass('event col-xs-12 card');
+  var $nameEventBox = $('<h4/>').addClass('name-event');
+  var $imgEventBox = $('<img/>').addClass('img-event band');
+  var $infoEventBox = $('<p/>').addClass('info-event');
+  var $dateEventBox = $('<span/>').addClass('date-event');
+  var $timeEventBox = $('<span/>').addClass('time-event');
+
+  // Agregando texto dinamicamente
+
+  $nameEventBox.text(nameEvent);
+
+  $infoEventBox.text(infoEvent);
+  $dateEventBox.text(dateEvent);
+  $timeEventBox.text(timeEvent);
+
+   // Agregando a contenedor
+
+   $eventBox.append($nameEventBox);
+   $eventBox.append($infoEventBox);
+   $eventBox.append($dateEventBox);
+   $eventBox.append($timeEventBox);
+   $('.events-container').append($eventBox);
+
+}
+
 $(document).ready(loadPage);
-
-
+  
 // function app(user){
 //   //user.displayName;
 //   //user.email;
