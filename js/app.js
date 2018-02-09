@@ -98,7 +98,7 @@ function saveDataUser(user) {
   localStorage.setItem('datos', ticketHackUser.uid);
 }
 
-
+/*---------- función para leer los post guardados del usuario loggeado ----------*/
 function paintUserPost() {
   firebase.database().ref('ticket-hack-user/' + logedUser + '/post')
   .on('value', function(snap){
@@ -107,7 +107,7 @@ function paintUserPost() {
     for(var key in datos){
       allPost += datos[key].userPost;
     }
-    console.log(allPost);
+    // console.log(allPost);
   })
 }
 
@@ -118,6 +118,12 @@ function saveSearchingPost() {
     userPost: $('.searching-textarea').val()
   }
 firebase.database().ref('ticket-hack-user/' + logedUser + '/post/').push(newpost)
+paintSearchingPost(newpost);
+}
+
+/*---------- función para pintar en el html los post de busqueda ----------*/
+function paintSearchingPost(newpost){
+  console.log(newpost.userPost);
 }
 
 $(document).ready(loadPage);
