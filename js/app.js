@@ -4,7 +4,7 @@ function loadPage() {
   loadMainView();
   $('.login-facebook').click(providerFacebook);
   $('.login-google').click(loginGoogle);
-  dataApi();
+  $('.exit').click(logOutGoogle);
   $('.publicar-busqueda').click(saveSearchingPost);
   paintUserPost();
  }
@@ -67,20 +67,38 @@ function loginGoogle(e){
   authentication(provider);
 }
 
-function authentication(provider){
-  firebase.auth().signInWithPopup(provider).then(function(result) {
-    var token = result.credential.accessToken;
-    var user = result.user;
-    console.log(user);
-    window.location.href = 'views/home.html';
-    saveDataUser(user);
-    //app(user);
+  function newLoginHappened(user){
+    if(user){
+      //User is signed in
+      app(user);
+    } else {
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithRedirect(provider);
+    }
+  }
+    firebase.auth().onAuthStateChanged(newLoginHappened);
+    window.location.assign("../views/home.html");
+    
+
+
+
+function app(user){
+  //user.displayName;
+  //user.email;
+  //user.photoURL;
+  //user.uid is unique
+  document.getElementById("clientName").innerHTML = user.displayName;
+  
+}
+
+//funcion para cerrar sesion
+function logOutGoogle(){
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
   }).catch(function(error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    var email = error.email;
-    var credential = error.credential;
+    // An error happened.
   });
+  window.location.assign("../index.html");
 }
 
 var database = firebase.database();
@@ -191,3 +209,4 @@ $(document).ready(loadPage);
 //
 //   document.getElementById("clientName").innerHTML = user.displayName;
 // }
+
