@@ -56,38 +56,56 @@ a:hover{
   background: #FFF;
 }
 
+.n-btn{
+  background-color: #0D192A;
+  color: #FFF;
+  border: 1px solid black;
+  padding: 1em;
+}
+
+.buscas{
+  margin: 2.1em;
+}
+
 .logo-1 {
   width: 50%;
   text-align: center;
-  margin-right: 5em;
 }
 
 .profile-1 {
-  width: 100%;
+  width: 75%;
   border-radius: 50%;
   display: inline-block;
-  margin: .5em 0 .5em 0;
+  margin: .8em 0 .8em -1em;
+  padding: 0;
 }
 
 #search {
-  width: 97%;
+  width: 100%;
   color: #C0C4C7;
   background-color: #FFF;
-  height: 2.5em;
+  height: 3em;
+  border: 1px solid grey;
 }
 
-#btn-s {
+.btn-s {
   width: 100%;
-  height: 2em;
-  background-color: #C0C4C7;
-  color:#0D182A;
+  height: 2.8em;
   margin-top: 1em;
-
+  margin-bottom: 1em;
+  padding: .5em;
+  background-color: #0D192A;
+  color: #FFF;
 }
 
 .update {
-  border: 1px solid #213323;
-  margin-top: 1em;
+  border: 1px solid #FFF;
+  background-color: #c0c4c7;
+}
+
+.update-2 {
+  text-align: justify;
+  margin-top: 1em
 }
 
 .sale {
@@ -98,10 +116,14 @@ a:hover{
 .card {
   background-color: #FFF;
   border: 1px solid #213323;
-  margin-top: 2em;
+  margin-top: 1em;
   height: auto;
 }
 
 .band {
   width: 80%;
+}
+
+.up {
+  padding: 0;
 }
