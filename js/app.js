@@ -98,7 +98,7 @@ function saveDataUser(user) {
   localStorage.setItem('datos', ticketHackUser.uid);
 }
 
-
+/*----------  ----------*/
 function paintUserPost() {
   firebase.database().ref('ticket-hack-user/' + logedUser + '/post')
   .on('value', function(snap){
