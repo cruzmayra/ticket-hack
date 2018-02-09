@@ -6,7 +6,8 @@ function loadPage() {
   $('.login-google').click(loginGoogle);
   dataApi();
   $('.publicar-busqueda').click(saveSearchingPost);
-  paintUserPost();
+  readUserPostSaved();
+  readPostSaved();
  }
 
 /*---------- Función que hace desaparecer la imagen principal ----------*/
@@ -98,20 +99,9 @@ function saveDataUser(user) {
    firebase.database().ref('ticket-hack-user/' + user.uid)
    .set(updatedUserData)
    localStorage.setItem('userId', user.uid);
-   console.log(localStorage.getItem('userId'));
+   // console.log(localStorage.getItem('userId'));
   })
 
-}
-
-/*---------- función para leer los post guardados del usuario loggeado ----------*/
-function paintUserPost() {
-  var loggedUser = localStorage.getItem('userId');
-  console.log(loggedUser);
-  var postsRef = firebase.database().ref('ticket-hack-user/' + loggedUser + '/posts');
-  postsRef.on('value', function(snapshot){
-
-    var userPosts = snapshot.val();
-  })
 }
 
 /*---------- función para almacenar el nuevo post del usuario logeado ----------*/
@@ -133,9 +123,34 @@ function saveSearchingPost() {
   return firebase.database().ref().update(updates);
 }
 
-/*---------- función para pintar en el html los post de busqueda ----------*/
+/*---------- función para leer los post guardados del usuario loggeado ----------*/
+function readUserPostSaved() {
+  var loggedUser = localStorage.getItem('userId');
+  // console.log(loggedUser);
+  var postsRef = firebase.database().ref('ticket-hack-user/' + loggedUser + '/posts');
+  postsRef.on('value', function(snapshot){
+
+    var userPosts = snapshot.val();
+    console.log(userPosts);
+  })
+}
+
+/*---------- función para leer los post guardados en la app ----------*/
+function readPostSaved() {
+  var loggedUser = localStorage.getItem('userId');
+  console.log(loggedUser);
+  var postsRef = firebase.database().ref('ticket-hack-user/' + 'ticket-hack-posts/');
+  console.log(postsRef);
+  postsRef.on('value', function(snapshot){
+
+    var appPosts = snapshot.val();
+    // console.log(appPosts);
+  })
+}
+
+
+/*---------- función para pintar en el html los post de busqueda en newsfeed----------*/
 function paintSearchingPost(newpost){
-  console.log(newpost.userPost);
 }
 
 function dataApi() {
@@ -145,9 +160,9 @@ function dataApi() {
         async:true,
         dataType: "json",
         success: function(json) {
-                    console.log(json);
+                    // console.log(json);
                    var event = json._embedded.events
-                console.log(event);
+                // console.log(event);
 
                    for(var i=0; i < event.length; i++ ){
                     var nameEvent= event[i].name; //nombre del evento
