@@ -13,11 +13,56 @@
     <link rel="stylesheet" href="../css/main.css">
   </head>
   <body>
-    <nav class="n-btn" >
+    <nav class="n-btn">
       <div class="container-fluid">
         <div>
-          <a class="buscas" href="#">Buscas boleto</a>
-          <a class="buscas" href="#">Vendes boleto</a>
+          <div class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              <a href="#"><img src="../assets/images/menu.png" alt="lines"></a>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a href="user.html">Mi perfil</a></li>
+              <li><a href="../index.html">Cerrar sesión</a></li>
+            </ul>
+          </div>
+          <a class="buscas" data-toggle="modal" data-target="#myModal" href="#">Buscas boleto</a>
+          <a class="vendes" data-toggle="modal" data-target="#myModal-2" href="#">Vendes boleto</a>
+          <!--Primer Modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">¿Buscas boleto?</h4>
+                </div>
+                <div class="modal-body">
+                  <textarea class="searching-textarea" placeholder="Publica lo que buscas aqui" rows="8" cols="50"></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-m publicar-busqueda" data-dismiss="modal">Publicar</button>
+                </div>
+              </div>
+            </div>
+          </div><!--Termina Primer Modal -->
+          <!--Segundo Modal -->
+          <div class="modal fade" id="myModal-2" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">¿Vendes boleto?</h4>
+                </div>
+                <div class="modal-body">
+                  <textarea placeholder="Publica lo que vendes aqui" rows="8" cols="50"></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-m publicar-venta" data-dismiss="modal">Publicar</button>
+                </div>
+              </div>
+            </div>
+          </div><!--Termina Segundo Modal -->
         </div>
       </div>
     </nav>
@@ -28,26 +73,33 @@
             <div class="row">
               <div class="col-xs-12">
                 <img class="logo-1" src="../assets/images/ticket-hack-logo.png" alt="logo">
-                <div class="container ">
+                <div class="container">
+                  <h2 class="titulo">Home</h2>
                   <input id="search" type="text" placeholder="Buscar conciertos"></input>
                   <button class="btn btn-default btn-s" type="button">Buscar</button>
                 </div>
+
+                <div id="home-post">
+
                 <div class="container update col-xs-12">
                   <div class="col-xs-3 up">
-                    <img  class="profile-1" src="../assets/images/perfil-1.jpg" alt="perfil">
+                    <a class="user-2" href="profile.html"><img  class="profile-1" src="../assets/images/perfil-1.jpg" alt="perfil"></a>
                   </div>
                   <div class="col-xs-9 up">
-                    <p class="update-2"><strong>Stephanie Cervantes</strong> <br> Vendo boleto para Ceremonia en 900!!!  </p>
+                    <a class="user-2" href="profile.html"><p class="update-2"><strong>Stephanie Cervantes</strong></a><br>Vendo boleto para Ceremonia en 900!!!</p>
+                    <button class="btn btn-default coment" type="button"><img src="../assets/images/comments.png" alt="Coment"></button>
                   </div>
                 </div>
-                <div class="container update col-xs-12">
+                <div class="container update col-xs-12 blue">
                   <div class="col-xs-3 up">
-                    <img  class="profile-1" src="../assets/images/perfil-2.jpg" alt="perfil">
+                    <a class="user-2" href="profile.html"><img  class="profile-1" src="../assets/images/perfil-2.jpg" alt="perfil"></a>
                   </div>
-                  <div class="col-xs-9 up ">
-                    <p class="update-2"><strong>Rod Mtez</strong> <br> Busco boleto para Vive Latino día sábado  </p>
+                  <div class="col-xs-9 up">
+                    <a class="user-2" href="profile.html"><p class="update-2"><strong>Rod Mtez</strong></a><br>Busco boleto para Vive Latino día sábado  </p>
+
+                      <button class="btn btn-default coment" type="button"><img src="../assets/images/comments.png" alt="Coment"></button>
+                    </div>
                   </div>
-                </div>
               </div>
               <div class="container-fluid events-container">
                 
@@ -60,14 +112,17 @@
     </section>
 <!-- SCRIPT FIREBASE -->
     <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../js/vendors/jquery-3.3.1.min.js" charset="utf-8"></script>
 <!--Js -->
     <script type="text/javascript" src="../js/app.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="../js/vendors/bootstrap.min.js"></script>
-<!-- Iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 
   </body>
 </html>
