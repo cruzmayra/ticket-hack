@@ -144,24 +144,32 @@ function printEvents(nameEvent,infoEvent,dateEvent,timeEvent){
   //creando elementos dimamicamnte//
   var $eventBox = $('<div/>').addClass('event col-xs-12 card');
   var $nameEventBox = $('<h4/>').addClass('name-event');
-  var $imgEventBox = $('<img/>').addClass('img-event band');
+  var $imgEventBox = $('<img/>').attr({
+      class:'img-event band',
+      src: "../assets/images/event.jpg",
+     });
+     
+
   var $infoEventBox = $('<p/>').addClass('info-event');
   var $dateEventBox = $('<span/>').addClass('date-event');
+  var $space = $('<br/>')
   var $timeEventBox = $('<span/>').addClass('time-event');
 
-  // Agregando texto dinamicamente
+  // Agregando texto dinamicamente 
 
   $nameEventBox.text(nameEvent);
-
+ 
   $infoEventBox.text(infoEvent);
-  $dateEventBox.text(dateEvent);
-  $timeEventBox.text(timeEvent);
+  $dateEventBox.text("Fecha:" + " " + dateEvent);
+  $timeEventBox.text("Hora:" + " " + timeEvent);
 
    // Agregando a contenedor
 
    $eventBox.append($nameEventBox);
+   $eventBox.append($imgEventBox);
    $eventBox.append($infoEventBox);
    $eventBox.append($dateEventBox);
+   $eventBox.append($space);
    $eventBox.append($timeEventBox);
    $('.events-container').append($eventBox);
 
