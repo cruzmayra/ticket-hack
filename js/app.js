@@ -4,10 +4,13 @@ function loadPage() {
   loadMainView();
   $('.login-facebook').click(providerFacebook);
   $('.login-google').click(loginGoogle);
-  dataApi();
-  $('.publicar-busqueda').click(saveSearchingPost);
-  readPostSaved();
-  readUserPostSaved();
+ }
+
+ function loadHomePage() {
+   dataApi();
+   $('.publicar-busqueda').click(saveSearchingPost);
+   readPostSaved();
+   readUserPostSaved();
  }
 
 /*---------- Función que hace desaparecer la imagen principal ----------*/
@@ -42,8 +45,6 @@ function providerFacebook(e){
   var provider = new firebase.auth.FacebookAuthProvider();
   authenticationWithFacebook(provider);
 }
-
-var loggedUser = localStorage.getItem('userId');
 
 /*---------- función que autentifica el acceso del usuario utilizando su cuenta de FB ----------*/
 function authenticationWithFacebook(provider) {
@@ -85,6 +86,8 @@ function authentication(provider){
 
 var database = firebase.database();
 
+var loggedUser = localStorage.getItem('userId');
+
 /*---------- función para almacenar al usuario en la base de datos ----------*/
 function saveDataUser(user) {
   firebase.database().ref('ticket-hack-user/' + user.uid)
@@ -123,6 +126,30 @@ function saveSearchingPost() {
   return firebase.database().ref().update(updates);
 }
 
+/*---------- función para leer los post guardados en la app ----------*/
+function readPostSaved() {
+  var loggedUser = localStorage.getItem('userId');
+  var postsRef = firebase.database().ref('ticket-hack-posts');
+  postsRef.on('value', function(snapshot){
+
+    var appPosts = snapshot.val();
+      for(var key in appPosts){
+        var post = appPosts[key].text;
+        paintPost(post);
+        // console.log(post);
+      }
+  })
+
+
+}
+
+function paintPost(post){
+  var $tarjeta = $('<p />');
+  // console.log($tarjeta);
+  $tarjeta.text(post);
+  $('#home-post').append($tarjeta);
+}
+
 /*---------- función para leer los post guardados del usuario loggeado ----------*/
 function readUserPostSaved() {
   var loggedUser = localStorage.getItem('userId');
@@ -134,20 +161,6 @@ function readUserPostSaved() {
     console.log(userPosts);
   })
 }
-
-/*---------- función para leer los post guardados en la app ----------*/
-function readPostSaved() {
-  var loggedUser = localStorage.getItem('userId');
-  console.log(loggedUser);
-  var postsRef = firebase.database().ref('ticket-hack-user/' + 'ticket-hack-posts/');
-  console.log(postsRef);
-  postsRef.on('value', function(snapshot){
-
-    var appPosts = snapshot.val();
-    // console.log(appPosts);
-  })
-}
-
 
 /*---------- función para pintar en el html los post de busqueda en newsfeed----------*/
 function paintSearchingPost(newpost){
@@ -188,17 +201,17 @@ function printEvents(nameEvent,infoEvent,dateEvent,timeEvent){
       class:'img-event band',
       src: "../assets/images/event.jpg",
      });
-     
+
 
   var $infoEventBox = $('<p/>').addClass('info-event');
   var $dateEventBox = $('<span/>').addClass('date-event');
   var $space = $('<br/>')
   var $timeEventBox = $('<span/>').addClass('time-event');
 
-  // Agregando texto dinamicamente 
+  // Agregando texto dinamicamente
 
   $nameEventBox.text(nameEvent);
- 
+
   $infoEventBox.text(infoEvent);
   $dateEventBox.text("Fecha:" + " " + dateEvent);
   $timeEventBox.text("Hora:" + " " + timeEvent);
@@ -216,3 +229,4 @@ function printEvents(nameEvent,infoEvent,dateEvent,timeEvent){
 }
 
 $(document).ready(loadPage);
+$(document).ready(loadHomePage);
