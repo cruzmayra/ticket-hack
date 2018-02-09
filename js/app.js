@@ -1,31 +1,29 @@
-// función que centraliza al resto de las funciones
+/*---------- función que centraliza al resto de las funciones ----------*/
 function loadPage() {
   loadSplashView();
   loadMainView();
   $('.login-facebook').click(providerFacebook);
   $('.login-google').click(loginGoogle);
-<<<<<<< HEAD
   $('.exit').click(logOutGoogle);
-=======
-
->>>>>>> upstream/master
+  $('.publicar-busqueda').click(saveSearchingPost);
+  paintUserPost();
  }
 
-//Función que hace desaparecer la imagen principal
+/*---------- Función que hace desaparecer la imagen principal ----------*/
 function loadSplashView() {
   setTimeout(function() {
       $("#view-splash").fadeOut(1500);
-    },2000);
+    },3000);
 };
 
-//Función que hace aparecer la siguiente pantalla
+/*---------- Función que hace aparecer la siguiente pantalla ----------*/
 function loadMainView() {
     setTimeout(function() {
       $("#second-section").fadeIn(1500);
-    },2000);
+    },3000);
 };
 
-// Initialize Firebase
+/*---------- Initialize Firebase ----------*/
 var config = {
   apiKey: "AIzaSyBF3Q7Sg2rKOCriKyo6kCb20d4a7C0S-_w",
   authDomain: "ticket-hack.firebaseapp.com",
@@ -37,21 +35,21 @@ var config = {
 
 firebase.initializeApp(config);
 
-//llamar esta función al dar click sobre el botón correspondiente
+/*---------- llamar esta función al dar click sobre el botón correspondiente ---------- */
 function providerFacebook(e){
   e.preventDefault();
   var provider = new firebase.auth.FacebookAuthProvider();
   authenticationWithFacebook(provider);
 }
 
-//función que autentifica el acceso del usuario utilizando su cuenta de FB
+var logedUser = localStorage.getItem('datos');
+
+/*---------- función que autentifica el acceso del usuario utilizando su cuenta de FB ----------*/
 function authenticationWithFacebook(provider) {
   firebase.auth().signInWithPopup(provider).then(function(result) {
-  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
   var token = result.credential.accessToken;
-  // The signed-in user info.
   var user = result.user;
-  console.log(result);
+  // console.log(user);
   window.location.href = 'views/home.html';
   saveDataUser(user);
 }).catch(function(error) {
@@ -62,29 +60,13 @@ function authenticationWithFacebook(provider) {
 });
 }
 
-var database = firebase.database();
-
-// función para almacenar al usuario en la base de datos
-function saveDataUser(user) {
-  var ticketHackUser = {
-    uid: user.uid,
-    name : user.displayName,
-    email : user.email,
-    photo: user.photoURL
-  }
-  firebase.database().ref('ticket-hack-user/' + user.uid)
-  .set(ticketHackUser);
-}
-
-$(document).ready(loadPage);
-
-//autenticacion con Google
-function loginGoogle(){
+/*---------- autenticacion con Google ----------*/
+function loginGoogle(e){
+  e.preventDefault();
   var provider = new firebase.auth.GoogleAuthProvider();
   authentication(provider);
 }
 
-<<<<<<< HEAD
   function newLoginHappened(user){
     if(user){
       //User is signed in
@@ -97,23 +79,8 @@ function loginGoogle(){
     firebase.auth().onAuthStateChanged(newLoginHappened);
     window.location.assign("../views/home.html");
     
-=======
-function authentication(provider){
-  firebase.auth().signInWithPopup(provider).then(function(result) {
-    var token = result.credential.accessToken;
-    var user = result.user;
-    console.log(user);
-    window.location.href = 'views/home.html';
-    saveDataUser(user);
-    app(user);
-  }).catch(function(error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    var email = error.email;
-    var credential = error.credential;
-  });
->>>>>>> upstream/master
-}
+
+
 
 function app(user){
   //user.displayName;
@@ -123,7 +90,6 @@ function app(user){
   document.getElementById("clientName").innerHTML = user.displayName;
   
 }
-<<<<<<< HEAD
 
 //funcion para cerrar sesion
 function logOutGoogle(){
@@ -135,11 +101,59 @@ function logOutGoogle(){
   window.location.assign("../index.html");
 }
 
+var database = firebase.database();
+
+/*---------- función para almacenar al usuario en la base de datos ----------*/
+function saveDataUser(user) {
+  var ticketHackUser = {
+    uid: user.uid,
+    name : user.displayName,
+    email : user.email,
+    photo: user.photoURL,
+    post: []
+  }
+  firebase.database().ref('ticket-hack-user/' + user.uid)
+  .set(ticketHackUser)
+  localStorage.setItem('datos', ticketHackUser.uid);
+}
+
+/*---------- función para leer los post guardados del usuario loggeado ----------*/
+function paintUserPost() {
+  firebase.database().ref('ticket-hack-user/' + logedUser + '/post')
+  .on('value', function(snap){
+    var allPost = "";
+    datos = snap.val();
+    for(var key in datos){
+      allPost += datos[key].userPost;
+    }
+    // console.log(allPost);
+  })
+}
+
+/*---------- función para almacenar el nuevo post del usuario logeado ----------*/
+function saveSearchingPost() {
+  // console.log(logedUser);
+  var newpost = {
+    userPost: $('.searching-textarea').val()
+  }
+firebase.database().ref('ticket-hack-user/' + logedUser + '/post/').push(newpost)
+paintSearchingPost(newpost);
+}
+
+/*---------- función para pintar en el html los post de busqueda ----------*/
+function paintSearchingPost(newpost){
+  console.log(newpost.userPost);
+}
+
+$(document).ready(loadPage);
 
 
+// function app(user){
+//   //user.displayName;
+//   //user.email;
+//   //user.photoURL;
+//   //user.uid is unique
+//
+//   document.getElementById("clientName").innerHTML = user.displayName;
+// }
 
-
-
-
-=======
->>>>>>> upstream/master

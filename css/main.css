@@ -50,7 +50,6 @@ a:hover{
   margin-bottom: -4em;
 }
 
-
 /*Estilos vista ticket-hack home*/
 .vista-2 {
   background: #FFF;
@@ -70,6 +69,7 @@ a:hover{
 .logo-1 {
   width: 50%;
   text-align: center;
+  margin-top: .2em;
 }
 
 .profile-1 {
@@ -101,11 +101,13 @@ a:hover{
 .update {
   border: 1px solid #FFF;
   background-color: #c0c4c7;
+  height: auto;
 }
 
 .update-2 {
   text-align: justify;
-  margin-top: 1em
+  margin-top: 1em;
+  margin-bottom: 0;
 }
 
 .sale {
@@ -126,4 +128,85 @@ a:hover{
 
 .up {
   padding: 0;
+}
+
+.coment {
+  margin-left: 12em;
+  margin-bottom: 1em;
+}
+
+.blue {
+  background-color: #abced3;
+}
+/* Estilos vista Perfil Usuario */
+.rating {
+  margin-bottom: 1em;
+}
+
+.just {
+  margin-top: .5em;
+  text-align: justify;
+}
+
+h3 {
+  margin-top: .4em;
+  margin-bottom: 1em;
+}
+
+.bttm {
+  margin-bottom: 1em;
+}
+
+.dropdown{
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background-color: #000;
+  padding: 0;
+}
+
+.titulo {
+  margin: 0;
+  margin-bottom: .5em;
+}
+
+.user-2{
+  text-decoration: none;
+  color: #000;
+}
+
+.user-2:hover{
+  text-decoration: none;
+  color: #000;
+}
+
+.dbtn {
+  background-color: #000;
+  padding: 0;
+  margin-right: 25em;
+}
+
+.gray {
+  background-color: #e5e3e3;
+}
+
+/*Estilos modales */
+.modal-title {
+  color: #000;
+}
+
+.btn-m {
+  background-color: #0D192A;
+  color: #FFF;
+}
+
+textarea {
+  border: 2px solid #0D192A;
+  border-radius: .5em;
+  color: #000;
+}
+
+.modal-content {
+  margin-top: 15em;
 }
