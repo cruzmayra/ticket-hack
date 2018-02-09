@@ -4,7 +4,7 @@ function loadPage() {
   loadMainView();
   $('.login-facebook').click(providerFacebook);
   $('.login-google').click(loginGoogle);
-  $('.vendes').click(savePost);
+  $('.publicar-busqueda').click(saveSearchingPost);
   paintUserPost();
  }
 
@@ -91,14 +91,14 @@ function saveDataUser(user) {
     name : user.displayName,
     email : user.email,
     photo: user.photoURL,
-    post: ['go']
+    post: []
   }
   firebase.database().ref('ticket-hack-user/' + user.uid)
   .set(ticketHackUser)
   localStorage.setItem('datos', ticketHackUser.uid);
 }
 
-
+/*---------- función para leer los post guardados del usuario loggeado ----------*/
 function paintUserPost() {
   firebase.database().ref('ticket-hack-user/' + logedUser + '/post')
   .on('value', function(snap){
@@ -107,17 +107,23 @@ function paintUserPost() {
     for(var key in datos){
       allPost += datos[key].userPost;
     }
-    console.log(allPost);
+    // console.log(allPost);
   })
 }
 
 /*---------- función para almacenar el nuevo post del usuario logeado ----------*/
-function savePost() {
+function saveSearchingPost() {
   // console.log(logedUser);
   var newpost = {
-    userPost: 'vendo boleto para el corona'
+    userPost: $('.searching-textarea').val()
   }
 firebase.database().ref('ticket-hack-user/' + logedUser + '/post/').push(newpost)
+paintSearchingPost(newpost);
+}
+
+/*---------- función para pintar en el html los post de busqueda ----------*/
+function paintSearchingPost(newpost){
+  console.log(newpost.userPost);
 }
 
 $(document).ready(loadPage);
