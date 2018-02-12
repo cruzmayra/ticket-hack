@@ -9,6 +9,7 @@ function loadPage() {
  function loadHomePage() {
    dataApi();
    $('.publicar-busqueda').click(saveSearchingPost);
+   $('.publicar-venta').click(saveSalesPost);
    readPostSaved();
    readUserPostSaved();
  }
@@ -102,19 +103,44 @@ function saveDataUser(user) {
    firebase.database().ref('ticket-hack-user/' + user.uid)
    .set(updatedUserData)
    localStorage.setItem('userId', user.uid);
+   localStorage.setItem('userPhoto',user.photoURL);
+   localStorage.setItem('userName',user.displayName);
    // console.log(localStorage.getItem('userId'));
   })
 
 }
 
-/*---------- función para almacenar el nuevo post del usuario logeado ----------*/
+/*---------- función para almacenar los post de busqueda de boletos del usuario logeado ----------*/
 function saveSearchingPost() {
   var loggedUser = localStorage.getItem('userId');
   var newpost = {
     text: $('.searching-textarea').val(),
     timestamp: Date.now(),
     type: 'searching',
-    userId: loggedUser
+    userId: loggedUser,
+    userPhoto: localStorage.getItem('userPhoto'),
+    userName: localStorage.getItem('userName')
+  }
+
+  var newPostKey = firebase.database().ref('ticket-hack-user/' + loggedUser + '/posts/').push().key;
+
+  var updates = {};
+  updates['ticket-hack-user/' + loggedUser + '/posts/' + newPostKey] = newpost;
+  updates['ticket-hack-posts/' + newPostKey] = newpost;
+
+  return firebase.database().ref().update(updates);
+}
+
+/*---------- función para almacenar los post de venta de boletos del usuario logeado ----------*/
+function saveSalesPost() {
+  var loggedUser = localStorage.getItem('userId');
+  var newpost = {
+    text: $('.sales-textarea').val(),
+    timestamp: Date.now(),
+    type: 'sales',
+    userId: loggedUser,
+    userPhoto: localStorage.getItem('userPhoto'),
+    userName: localStorage.getItem('userName')
   }
 
   var newPostKey = firebase.database().ref('ticket-hack-user/' + loggedUser + '/posts/').push().key;
@@ -135,25 +161,37 @@ function readPostSaved() {
     var appPosts = snapshot.val();
       for(var key in appPosts){
         var post = appPosts[key].text;
-        paintPost(post);
-        // console.log(post);
+        var typePost = appPosts[key].type;
+        var authorPost = appPosts[key].userName;
+        var photoAuthorPost = appPosts[key].userPhoto
+        paintPost(post, typePost, authorPost, photoAuthorPost);
+        console.log(post);
       }
   })
 
 
 }
 
-function paintPost(post){
-  var $tarjeta = $('<p />');
-  // console.log($tarjeta);
-  $tarjeta.text(post);
-  $('#home-post').append($tarjeta);
+/*---------- función para pintar en HTML los post guardados en la app ----------*/
+function paintPost(post, typePost, authorPost, photoAuthorPost){
+  var postToPaint = "";
+  postToPaint += "<div class='container "+ typePost  + "' col-xs-12'>" +
+  "<div class='col-xs-3 up'>" +
+  "<a class='user-2' href='profile.html'><img class='profile-1' src='" + photoAuthorPost + "' alt='perfil'></a>" +
+  "</div>" +
+  "<div class='col-xs-9 up'>" +
+  "<p class='update-2'><a class='user-2' href='profile.html'><strong>" + authorPost + "</strong></a></p>" +
+  "<p>" + post + "</p>" +
+  "<button class='btn btn-default coment' type='button' data-toggle='modal' data-target='#myModal-3'><img src='../assets/images/comments.png' alt='coment'></button>" +
+  "</div>" +
+  "</div>"
+
+  $('#home-post').prepend(postToPaint);
 }
 
 /*---------- función para leer los post guardados del usuario loggeado ----------*/
 function readUserPostSaved() {
   var loggedUser = localStorage.getItem('userId');
-  // console.log(loggedUser);
   var postsRef = firebase.database().ref('ticket-hack-user/' + loggedUser + '/posts');
   postsRef.on('value', function(snapshot){
 
@@ -162,10 +200,7 @@ function readUserPostSaved() {
   })
 }
 
-/*---------- función para pintar en el html los post de busqueda en newsfeed----------*/
-function paintSearchingPost(newpost){
-}
-
+/*---------- función para pintar en el html los eventos de la api de TM----------*/
 function dataApi() {
     $.ajax({
         type:"GET",
@@ -173,7 +208,7 @@ function dataApi() {
         async:true,
         dataType: "json",
         success: function(json) {
-          
+
                     //console.log(json);
 
                    var event = json._embedded.events
@@ -183,13 +218,13 @@ function dataApi() {
                     var nameEvent= event[i].name; //nombre del evento
                     var infoEvent = event[i].info; //descripcion del evento
                     var datesObject= event[i].dates;
-                    var urlEvent = event[i].url; //sitio Web 
+                    var urlEvent = event[i].url; //sitio Web
                     var adressEvent = event[i]._embedded.venues[0].name;//lugar del evento
                     var dateEvent = datesObject.start.localDate; //fecha del evento
                     var timeEvent = datesObject.start.localTime; //hora del evento
-                     
+
                     printEvents(nameEvent, infoEvent, dateEvent, timeEvent, adressEvent,urlEvent);
-                    
+
                    }
                  },
         error: function(xhr, status, err) {
@@ -217,7 +252,7 @@ function printEvents(nameEvent,infoEvent,dateEvent,timeEvent,adressEvent,urlEven
   // Agregando texto dinamicamente
 
   $nameEventBox.text(nameEvent);
- 
+
   $adressEventBox.text("Lugar:" + " " +adressEvent);
   $dateEventBox.text("Fecha:" + " " + dateEvent);
   $timeEventBox.text("Hora:" + " " + timeEvent);
@@ -250,7 +285,7 @@ function printEvents(nameEvent,infoEvent,dateEvent,timeEvent,adressEvent,urlEven
   $star_rating.on('click', function () {
     $star_rating.siblings('input.rating-value').val($(this).data('rating'));
     return SetRatingStar();
-  }); 
+  });
 
 $(document).ready(loadPage);
 $(document).ready(loadHomePage);

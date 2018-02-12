@@ -103,10 +103,11 @@ a:hover{
   color: #FFF;
 }
 
-.update {
+.sales {
   border: 1px solid #FFF;
   background-color: #c0c4c7;
   height: auto;
+  margin: 1% 0;
 }
 
 .update-2 {
@@ -115,15 +116,7 @@ a:hover{
   margin-bottom: 0;
 }
 
-.sale {
-  margin-top: 4.5em;
-  background-color: #FFF;
-}
-
 .card {
-  /* background-image: linear-gradient(to top, #a589a5, #dab7df);
-  background-blend-mode: hard-light; */
-  /* border: 1px solid #8c918e; */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin-top: 1em;
   height: auto;
@@ -151,9 +144,11 @@ a:hover{
   margin-bottom: 1em;
 }
 
-.blue {
+.searching {
   background-color: #abced3;
+  margin: 1% 0;
 }
+
 /* Estilos vista Perfil Usuario */
 .rating {
   margin-bottom: 1em;
