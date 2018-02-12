@@ -199,9 +199,6 @@ function readUserPostSaved() {
   })
 }
 
-var postData = firebase.database().ref('ticket-hack-posts');
-// console.log(postData);
-
 /*---------- función para filtrar los post guardados ----------*/
 function filterPost() {
   var postsRef = firebase.database().ref('ticket-hack-posts');
@@ -218,7 +215,6 @@ function filterPost() {
         var post = post.text.toLowerCase().indexOf($searchTickets) >= 0;
         console.log(post);
       })
-    })
     }
   })
 }
