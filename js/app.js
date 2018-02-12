@@ -12,6 +12,7 @@ function loadPage() {
    $('.publicar-venta').click(saveSalesPost);
    readPostSaved();
    readUserPostSaved();
+   $('.searching-button').click(filterPost);
  }
 
 /*---------- Función que hace desaparecer la imagen principal ----------*/
@@ -74,7 +75,7 @@ function authentication(provider){
   firebase.auth().signInWithPopup(provider).then(function(result) {
     var token = result.credential.accessToken;
     var user = result.user;
-    console.log(user);
+    // console.log(user);
     window.location.href = 'views/home.html';
     saveDataUser(user);
   }).catch(function(error) {
@@ -165,11 +166,9 @@ function readPostSaved() {
         var authorPost = appPosts[key].userName;
         var photoAuthorPost = appPosts[key].userPhoto
         paintPost(post, typePost, authorPost, photoAuthorPost);
-        console.log(post);
+        // console.log(post);
       }
   })
-
-
 }
 
 /*---------- función para pintar en HTML los post guardados en la app ----------*/
@@ -196,9 +195,34 @@ function readUserPostSaved() {
   postsRef.on('value', function(snapshot){
 
     var userPosts = snapshot.val();
-    console.log(userPosts);
+    // console.log(userPosts);
   })
 }
+
+var postData = firebase.database().ref('ticket-hack-posts');
+// console.log(postData);
+
+/*---------- función para filtrar los post guardados ----------*/
+function filterPost() {
+  var postsRef = firebase.database().ref('ticket-hack-posts');
+  postsRef.on('value', function(snapshot){
+
+    var appPosts = snapshot.val();
+    var dataAppPosts = Object.values(appPosts);
+
+    var $searchTickets = $('#search').val().toLowerCase();
+    $('#home-post').empty();
+    if($('#search').val().trim().length > 0) {
+      var filteredTickets = dataAppPosts.filter(function(key) {
+        // console.log(post);
+        var post = post.text.toLowerCase().indexOf($searchTickets) >= 0;
+        console.log(post);
+      })
+    })
+    }
+  })
+}
+
 
 /*---------- función para pintar en el html los eventos de la api de TM----------*/
 function dataApi() {
