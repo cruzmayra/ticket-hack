@@ -12,7 +12,7 @@ function loadPage() {
    $('.publicar-venta').click(saveSalesPost);
    readPostSaved();
    readUserPostSaved();
-   $('.searching-button').click(filterPost);
+   $('#search').keyup(filterPost);
  }
 
 /*---------- Función que hace desaparecer la imagen principal ----------*/
@@ -161,11 +161,8 @@ function readPostSaved() {
 
     var appPosts = snapshot.val();
       for(var key in appPosts){
-        var post = appPosts[key].text;
-        var typePost = appPosts[key].type;
-        var authorPost = appPosts[key].userName;
-        var photoAuthorPost = appPosts[key].userPhoto
-        paintPost(post, typePost, authorPost, photoAuthorPost);
+        var post = appPosts[key];
+        paintPost(post);
         // console.log(post);
       }
   })
@@ -174,13 +171,13 @@ function readPostSaved() {
 /*---------- función para pintar en HTML los post guardados en la app ----------*/
 function paintPost(post, typePost, authorPost, photoAuthorPost){
   var postToPaint = "";
-  postToPaint += "<div class='container "+ typePost  + "' col-xs-12'>" +
+  postToPaint += "<div class='container "+ post.type + "' col-xs-12'>" +
   "<div class='col-xs-3 up'>" +
-  "<a class='user-2' href='profile.html'><img class='profile-1' src='" + photoAuthorPost + "' alt='perfil'></a>" +
+  "<a class='user-2' href='profile.html'><img class='profile-1' src='" + post.userPhoto + "' alt='perfil'></a>" +
   "</div>" +
   "<div class='col-xs-9 up'>" +
-  "<p class='update-2'><a class='user-2' href='profile.html'><strong>" + authorPost + "</strong></a></p>" +
-  "<p>" + post + "</p>" +
+  "<p class='update-2'><a class='user-2' href='profile.html'><strong>" + post.userName + "</strong></a></p>" +
+  "<p>" + post.text + "</p>" +
   "<button class='btn btn-default coment' type='button' data-toggle='modal' data-target='#myModal-3'><img src='../assets/images/comments.png' alt='coment'></button>" +
   "</div>" +
   "</div>"
@@ -209,12 +206,19 @@ function filterPost() {
 
     var $searchTickets = $('#search').val().toLowerCase();
     $('#home-post').empty();
-    if($('#search').val().trim().length > 0) {
-      var filteredTickets = dataAppPosts.filter(function(key) {
-        // console.log(post);
-        var post = post.text.toLowerCase().indexOf($searchTickets) >= 0;
-        console.log(post);
+    if($('#search').val().trim()) {
+        var filteredTickets = dataAppPosts.filter(function(key) {
+        // console.log(key);
+        var postFind = key.text.toLowerCase().indexOf($searchTickets) >= 0;
+        return postFind
       })
+        paintPost(filteredTickets[0])
+    } else {
+        $('#home-post').empty();
+        for(var key in appPosts){
+          var post = appPosts[key];
+          paintPost(post);
+        }
     }
   })
 }
