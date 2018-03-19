@@ -160,6 +160,7 @@ function readPostSaved() {
   postsRef.on('value', function(snapshot){
 
     var appPosts = snapshot.val();
+    $('#home-post').empty();
       for(var key in appPosts){
         var post = appPosts[key];
         paintPost(post);
@@ -222,7 +223,6 @@ function filterPost() {
     }
   })
 }
-
 
 /*---------- función para pintar en el html los eventos de la api de TM----------*/
 function dataApi() {
