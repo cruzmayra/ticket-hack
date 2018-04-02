@@ -1,5 +1,10 @@
 ## Ticket-Hack
 
+Plataforma que busca ofrecer un espacio para el intercambio de boletos, principalmente para conciertos, desde una comunidad segura y confiable.
+
+![phone-ticket-01](https://user-images.githubusercontent.com/32860789/38201677-b63ebbb2-365e-11e8-8d72-9c54ff403a90.jpg)
+![phone-ticket-02](https://user-images.githubusercontent.com/32860789/38201678-bc3fb502-365e-11e8-868c-22daefd7adc5.jpg)
+
 ### User Research
 Personas que asisten comúnmente a conciertos, que buscan o venden boletos con otros usuarios.
 Supuestos
